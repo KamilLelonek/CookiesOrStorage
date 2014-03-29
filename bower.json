@@ -6,8 +6,6 @@
         "cookies_or_storage.coffee",
         "cookies_or_storage.js",
         ".gitignore",
-        "bower.json",
-        "package.json",
-        "README.md"
+        "bower.json"
     ]
 }
