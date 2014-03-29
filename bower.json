@@ -1,6 +1,6 @@
 {
     "name": "CookiesOrStorage",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "main": "cookies_or_storage.min.js",
     "ignore": [
         "cookies_or_storage.coffee",
