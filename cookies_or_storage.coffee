@@ -11,7 +11,9 @@ class @Cookies
     if key and matchingResult then unescape(matchingResult[1]) else ''
 
   @remove : (key) ->
-    document.cookie = "#{key}=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    cookie = "#{key}=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    document.cookie = cookie
+    document.cookie = "_#{cookie}"
 
   @clearAll : ->
     cookies = document.cookie.split ';'
@@ -23,10 +25,11 @@ class @Cookies
   @enabled : ->
     return false unless Cookies.navigatorCookies()
     return true if document.cookie
-    document.cookie = 'cookietest=1'
-    result = document.cookie.indexOf('cookietest') isnt -1
+    name = 'cookietest'
+    Cookies.set name, 1
+    result = Cookies.get name
     Cookies.remove name
-    result
+    !!result
 
   @navigatorCookies : -> navigator.cookieEnabled
 
@@ -40,6 +43,7 @@ class @Storage
 
   @remove : (key) ->
     localStorage.removeItem key
+    localStorage.removeItem "_#{key}"
 
   @clearAll : ->
     localStorage.clear()
@@ -82,13 +86,11 @@ class @Persistency
   @remove : (key) ->
     if Cookies.enabled()
       Cookies.remove key
-      Cookies.remove "_#{key}"
     if Storage.enabled()
       Storage.remove key
-      Storage.remove "_#{key}"
 
   @clearAll : ->
     if Cookies.enabled()
-      Storage.clearAll()
-    if Storage.enabled()
       Cookies.clearAll()
+    if Storage.enabled()
+      Storage.clearAll()

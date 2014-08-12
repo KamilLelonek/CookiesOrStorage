@@ -23,4 +23,4 @@ module.exports = (config) ->
       'karma-growl'
     ]
     reporters : ['progress', 'junit', 'growl', 'coverage']
-    autoWatch : true
+    singleRun : true

@@ -25,7 +25,10 @@ this.Cookies = (function() {
   };
 
   Cookies.remove = function(key) {
-    return document.cookie = "" + key + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    var cookie;
+    cookie = "" + key + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = cookie;
+    return document.cookie = "_" + cookie;
   };
 
   Cookies.clearAll = function() {
@@ -40,17 +43,18 @@ this.Cookies = (function() {
   };
 
   Cookies.enabled = function() {
-    var result;
+    var name, result;
     if (!Cookies.navigatorCookies()) {
       return false;
     }
     if (document.cookie) {
       return true;
     }
-    document.cookie = 'cookietest=1';
-    result = document.cookie.indexOf('cookietest') !== -1;
+    name = 'cookietest';
+    Cookies.set(name, 1);
+    result = Cookies.get(name);
     Cookies.remove(name);
-    return result;
+    return !!result;
   };
 
   Cookies.navigatorCookies = function() {
@@ -74,7 +78,8 @@ this.Storage = (function() {
   };
 
   Storage.remove = function(key) {
-    return localStorage.removeItem(key);
+    localStorage.removeItem(key);
+    return localStorage.removeItem("_" + key);
   };
 
   Storage.clearAll = function() {
@@ -150,20 +155,18 @@ this.Persistency = (function() {
   Persistency.remove = function(key) {
     if (Cookies.enabled()) {
       Cookies.remove(key);
-      Cookies.remove("_" + key);
     }
     if (Storage.enabled()) {
-      Storage.remove(key);
-      return Storage.remove("_" + key);
+      return Storage.remove(key);
     }
   };
 
   Persistency.clearAll = function() {
     if (Cookies.enabled()) {
-      Storage.clearAll();
+      Cookies.clearAll();
     }
     if (Storage.enabled()) {
-      return Cookies.clearAll();
+      return Storage.clearAll();
     }
   };
 
