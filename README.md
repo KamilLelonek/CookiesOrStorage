@@ -9,9 +9,9 @@ This library offers 2 types of persistency: `Cookies` or `LocalStorage`. They ca
 
 Save data:
 ```
-Cookies.set key
-Storage.set key
-Persistency.set key
+Cookies.set key, value
+Storage.set key, value
+Persistency.set key, value
 ```
 
 Read data:
