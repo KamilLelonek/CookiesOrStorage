@@ -75,8 +75,8 @@ class @Persistency
     if Storage.enabled() and Cookies.enabled()
       cookieVal  = Cookies.get key
       storageVal = Storage.get key
-      return cookieVal if cookieVal and not storageVal
-      return storageVal if storageVal and not storageVal
+      return cookieVal  if cookieVal  and not storageVal
+      return storageVal if storageVal and not cookieVal
       if storageVal and cookieVal
         cookieTime  = parseInt(Cookies.get "_#{key}")
         storageTime = parseInt(Storage.get "_#{key}")
